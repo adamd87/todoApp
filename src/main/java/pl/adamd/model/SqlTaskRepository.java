@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 interface SqlTaskRepository extends TaskRepository, JpaRepository<Task, Integer> {
+
 }
