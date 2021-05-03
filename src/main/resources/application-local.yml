@@ -1,6 +1,4 @@
 spring:
-  main:
-    banner-mode: off
   h2.console:
     enabled: true
     path: '/console'
@@ -10,4 +8,3 @@ spring:
     url: 'jdbc:h2:file:C:\\Users\\adamd\\IdeaProjects\\todoApp\\todo-db'
     username: test
     password: test
-task.template.allowMultipleTasks: false
