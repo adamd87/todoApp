@@ -15,11 +15,10 @@ public class Task {
     private boolean done;
     private LocalDateTime deadline;
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(column = @Column(name = "created_on"), name = "createdOn"),
-            @AttributeOverride(column = @Column(name = "updated_on"), name = "updatedOn")
-    })
     private Audit audit = new Audit();
+    @ManyToOne
+    @JoinColumn(name = "task_group_id")
+    private TaskGroup group;
 
     Task() {
     }
@@ -56,10 +55,19 @@ public class Task {
         this.done = done;
     }
 
+    TaskGroup getGroup() {
+        return group;
+    }
+
+    void setGroup(final TaskGroup group) {
+        this.group = group;
+    }
+
     public void updateFrom(final Task source) {
         description = source.description;
         done = source.done;
         deadline = source.deadline;
+        group = source.group;
     }
 
 }

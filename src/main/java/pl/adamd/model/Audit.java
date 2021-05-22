@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 
 @Embeddable
 class Audit {
+    @Column(name = "created_on")
     private LocalDateTime createdOn;
+    @Column(name = "updated_on")
     private LocalDateTime updatedOn;
 
 
