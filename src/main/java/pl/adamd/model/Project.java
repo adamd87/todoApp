@@ -14,9 +14,9 @@ public class Project {
     private String description;
     @Embedded
     private Audit audit = new Audit();
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "project")
+    @OneToMany(mappedBy = "project")
     private Set<TaskGroup> taskGroups;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "project")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
     private Set<ProjectStep> projectSteps;
 
     Project() {
