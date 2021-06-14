@@ -12,7 +12,7 @@ public class ProjectStep {
     @NotBlank(message = "Project step's description must not be empty")
     private String description;
     @Column(name = "days_to_deadline")
-    private Long daysToDeadline;
+    private int daysToDeadline;
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
@@ -36,11 +36,11 @@ public class ProjectStep {
         this.description = description;
     }
 
-    public Long getDaysToDeadline() {
+    public int getDaysToDeadline() {
         return daysToDeadline;
     }
 
-    void setDaysToDeadline(final Long daysToDeadline) {
+    void setDaysToDeadline(final int daysToDeadline) {
         this.daysToDeadline = daysToDeadline;
     }
 
