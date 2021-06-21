@@ -1,10 +1,7 @@
 package pl.adamd.logic;
 
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.RequestScope;
-import pl.adamd.TaskConfigurationProperties;
 import pl.adamd.model.TaskGroup;
 import pl.adamd.model.TaskGroupRepository;
 import pl.adamd.model.TaskRepository;
@@ -14,8 +11,7 @@ import pl.adamd.model.projection.GroupWriteModel;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@RequestScope
+
 public class TaskGroupService {
     private TaskGroupRepository repository;
     private TaskRepository taskRepository;

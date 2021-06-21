@@ -116,7 +116,7 @@ class ProjectServiceTest {
                 .map(days -> {
                     var projectStep = mock(ProjectStep.class);
                     when(projectStep.getDescription()).thenReturn("oop");
-                    when(projectStep.getDaysToDeadline()).thenReturn(days);
+                    when(projectStep.getDaysToDeadline()).thenReturn(days.longValue());
                     return projectStep;
                 })
                 .collect(Collectors.toSet());
