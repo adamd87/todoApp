@@ -1,7 +1,5 @@
 package pl.adamd.logic;
 
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
 import pl.adamd.model.TaskGroup;
 import pl.adamd.model.TaskGroupRepository;
 import pl.adamd.model.TaskRepository;
@@ -39,7 +37,5 @@ public class TaskGroupService {
         TaskGroup result = repository.findById(groupId)
                 .orElseThrow(() -> new IllegalArgumentException("TaskGroup with given id not found"));
         result.setDone(!result.isDone());
-        repository.save(result);
     }
-
 }
