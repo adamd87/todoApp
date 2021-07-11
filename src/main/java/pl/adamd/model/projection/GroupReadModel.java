@@ -4,7 +4,6 @@ import pl.adamd.model.Task;
 import pl.adamd.model.TaskGroup;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
 

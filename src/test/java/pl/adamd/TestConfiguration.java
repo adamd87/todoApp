@@ -53,7 +53,7 @@ class TestConfiguration {
             }
 
             @Override
-            public boolean existsById(final Integer id) {
+            public boolean existsById(final int id) {
                 return tasks.containsKey(id);
             }
 
@@ -79,6 +79,11 @@ class TestConfiguration {
                 }
                 tasks.put(key, entity);
                 return tasks.get(key);
+            }
+
+            @Override
+            public Task deleteById(final int id) {
+                return null;
             }
 
             @Override

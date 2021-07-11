@@ -56,7 +56,16 @@ class TaskController {
                 repository.findByDone(state)
         );
     }
-
+    @DeleteMapping("/{id}")
+    ResponseEntity<Task> deleteTaskById(@PathVariable int id){
+        if (!repository.existsById(id)) {
+            return ResponseEntity.noContent().build();
+        }
+        repository.findById(id)
+                .ifPresent(task ->
+                        repository.deleteById(id));
+        return ResponseEntity.ok().build();
+    }
 
     @PostMapping
     ResponseEntity<Task> createTask(@RequestBody @Valid Task task) {
