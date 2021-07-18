@@ -15,6 +15,8 @@ import pl.adamd.model.TaskRepository;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Configuration
@@ -88,6 +90,11 @@ class TestConfiguration {
 
             @Override
             public List<Task> findAllByGroup_Id(final Integer groupId) {
+                return null;
+            }
+
+            @Override
+            public List<Task> findByDeadline(final LocalDateTime localDateTime) {
                 return null;
             }
         };

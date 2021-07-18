@@ -1,8 +1,10 @@
 package pl.adamd.controller;
 
+import org.aspectj.lang.annotation.DeclareWarning;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,9 @@ import pl.adamd.model.TaskRepository;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -28,7 +33,7 @@ class TaskController {
     }
 
     /**
-    @Async example:
+     * @Async example:
      */
     @GetMapping(params = {"!sort", "!page", "!size"})
     CompletableFuture<ResponseEntity<List<Task>>> readAllTasks() {
@@ -56,8 +61,26 @@ class TaskController {
                 repository.findByDone(state)
         );
     }
+
+    @GetMapping("/search/deadline/now")
+    ResponseEntity<List<Task>> readByDeadLineNow() {
+        return ResponseEntity.ok(repository.findByDeadline(LocalDateTime.now()));
+    }
+
+    @GetMapping("/search/deadline/day_after")
+    ResponseEntity<List<Task>> readByDeadLineDayAfter() {
+        return ResponseEntity.ok(repository.findByDeadline(LocalDateTime.now().minusDays(1)));
+
+    }
+
+    @GetMapping("/search/deadline/null")
+    ResponseEntity<List<Task>> readByDeadLineNotSet() {
+        return ResponseEntity.ok(repository.findByDeadline(null));
+    }
+
+
     @DeleteMapping("/{id}")
-    ResponseEntity<Task> deleteTaskById(@PathVariable int id){
+    ResponseEntity<Task> deleteTaskById(@PathVariable int id) {
         if (!repository.existsById(id)) {
             return ResponseEntity.noContent().build();
         }
