@@ -19,7 +19,7 @@ public class Project {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
     private Set<ProjectStep> projectSteps;
 
-    Project() {
+    public Project() {
     }
 
     public int getId() {
@@ -34,7 +34,7 @@ public class Project {
         return description;
     }
 
-    void setDescription(final String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 

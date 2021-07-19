@@ -5,6 +5,7 @@ import pl.adamd.model.*;
 import pl.adamd.model.projection.GroupReadModel;
 import pl.adamd.model.projection.GroupTaskWriteModel;
 import pl.adamd.model.projection.GroupWriteModel;
+import pl.adamd.model.projection.ProjectWriteModel;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,8 +34,8 @@ public class ProjectService {
         return repository.findAll();
     }
 
-    public Project saveProject(final Project project) {
-        return repository.save(project);
+    public Project saveProject(final ProjectWriteModel toSave) {
+        return repository.save(toSave.toProject());
     }
 
     public GroupReadModel createGroup(LocalDateTime deadline, int projectId) {
@@ -57,7 +58,7 @@ public class ProjectService {
                                     })
                                     .collect(Collectors.toSet())
                     );
-                    return taskGroupService.createGroup(targetGroup);
+                    return taskGroupService.createGroup(targetGroup, project);
                 }).orElseThrow(() -> new IllegalArgumentException("Project with given id not found"));
     }
 }
