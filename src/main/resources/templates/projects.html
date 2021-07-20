@@ -1,31 +1,64 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TodoApp: projects</title>
     <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm.min.css">
+    <style>
+        .Bd {
+            border: solid 1px black;
+        }
+
+        .P\(0\) {
+            padding: 0;
+        }
+
+        .P\(10px\) {
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
 <main>
-    <!--/*thymesVar id="projects" type="pl.adamd.model.projection.ProjectWriteModel"*/-->
-    <form action="#" method="post" th:action="@{/projects}" th:object="${project}">
-        <fieldset>
-            <legend>New project</legend>
+    <!--/*thymesVar id="message" type="java.lang.String"*/-->
+    <h1 th:if="${message != null}" th:text="${message}"></h1>
+    <!--/*thymesVar id="projects" type="java.util.List<pl.adamd.model.Project>"*/-->
+    <dl th:each="project : ${projects}" class="Bd P(10px)">
+        <dt th:text="${project.description}">...</dt>
+        <dd>
+            <ul class="P(0)">
+                <li th:each="step : ${project.projectSteps}"
+                    th:text="|${step.description} (${step.daysToDeadline} days)|"></li>
+            </ul>
+        </dd>
+    </dl>
+    <fieldset>
+        <legend>New project</legend>
+        <!--/*thymesVar id="projects" type="pl.adamd.model.projection.ProjectWriteModel"*/-->
+        <form action="#" method="post" th:action="@{/projects}" th:object="${project}">
             <label>Description
                 <input type="text" th:field="*{description}"/>
             </label>
-            <fieldset>
-                <legend>Step 1</legend>
+            <fieldset th:each="step,stepStat : *{projectSteps}">
+                <legend th:text="|Step ${stepStat.index + 1}|"></legend>
                 <label>Description
-                    <input type="text" th:field="*{projectSteps[0].description}"/>
+                    <input type="text" th:field="*{projectSteps[__${stepStat.index}__].description}"/>
                 </label>
                 <label>Days to project deadline
-                    <input type="text" th:field="*{projectSteps[0].daysToDeadline}"/>
+                    <input type="number" th:field="*{projectSteps[__${stepStat.index}__].daysToDeadline}"/>
                 </label>
             </fieldset>
-        </fieldset>
-    </form>
+            <div>
+                <button type="submit" name="addStep">+</button>
+            </div>
+            <p>
+                <button type="submit">Add</button>
+                <button type="reset">Clear</button>
+            </p>
+        </form>
+    </fieldset>
 </main>
 </body>
 </html>
