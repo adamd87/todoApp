@@ -2,7 +2,6 @@ package pl.adamd.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,20 +11,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.adamd.logic.TaskGroupService;
 import pl.adamd.model.Task;
-import pl.adamd.model.TaskGroup;
 import pl.adamd.model.TaskRepository;
 import pl.adamd.model.projection.GroupReadModel;
 import pl.adamd.model.projection.GroupTaskWriteModel;
 import pl.adamd.model.projection.GroupWriteModel;
 
-import javax.print.attribute.standard.Media;
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
 @Controller
+@IllegalExceptionProcessing
 @RequestMapping("/groups")
 class TaskGroupController {
     private static final Logger logger = LoggerFactory.getLogger(TaskGroupController.class);
@@ -111,16 +108,6 @@ class TaskGroupController {
     public ResponseEntity<?> toggleTaskGroup(@PathVariable int id) {
         groupService.toggleGroup(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    ResponseEntity<?> handleIllegalArgument(IllegalArgumentException e) {
-        return ResponseEntity.notFound().build();
-    }
-
-    @ExceptionHandler(IllegalStateException.class)
-    ResponseEntity<?> handleIllegalState(IllegalStateException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     @ModelAttribute("groups")

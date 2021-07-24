@@ -37,7 +37,13 @@ http://www.thymeleaf.org ">
     </h1>
     <!--/*thymesVar id="groups" type="java.util.List<pl.adamd.model.Task>"*/-->
     <dl th:each="group : ${groups}" class="Bd P(10px)">
-        <dt th:text="${group.description}">...</dt>
+        <dt>
+            <label>
+                <input type="checkbox" />
+                <span th:text="${group.description}"></span>
+                <small th:text="|(${group.deadline})|"></small>
+            </label>
+        </dt>
         <dd>
             <a th:href="@{'/tasks.html?group=' + ${group.id}}">
                 <ul class="P(0)">
