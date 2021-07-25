@@ -182,6 +182,7 @@ class ProjectServiceTest {
             return entity;
         }
 
+
         @Override
         public boolean existsByDoneIsFalseAndProject_Id(final Integer projectId) {
             return map.values()
@@ -189,6 +190,12 @@ class ProjectServiceTest {
                     .anyMatch(taskGroup ->
                             taskGroup.getProject() != null &&
                                     taskGroup.getProject().getId() == projectId);
+        }
+
+        @Override
+        public boolean existsByDescription(final String description) {
+            return map.values()
+                    .stream().anyMatch(taskGroup -> taskGroup.getDescription().equals(description));
         }
     }
 }

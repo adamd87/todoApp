@@ -1,5 +1,7 @@
 package pl.adamd.model;
 
+import pl.adamd.model.event.TaskEvent;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -63,8 +65,9 @@ public class Task {
         return done;
     }
 
-    public void setDone(final boolean done) {
-        this.done = done;
+    public TaskEvent toggle() {
+        this.done = !this.done;
+        return TaskEvent.changed(this);
     }
 
     TaskGroup getGroup() {

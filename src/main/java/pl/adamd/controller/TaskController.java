@@ -1,10 +1,9 @@
 package pl.adamd.controller;
 
-import org.aspectj.lang.annotation.DeclareWarning;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +13,7 @@ import pl.adamd.model.TaskRepository;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +23,12 @@ class TaskController {
     private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
     private final TaskRepository repository;
     private final TaskService service;
+    private final ApplicationEventPublisher eventPublisher;
 
-    TaskController(final TaskRepository repository, final TaskService service) {
+    TaskController(final TaskRepository repository, final TaskService service, final ApplicationEventPublisher eventPublisher) {
         this.repository = repository;
         this.service = service;
+        this.eventPublisher = eventPublisher;
     }
 
     /**
@@ -116,7 +115,8 @@ class TaskController {
             return ResponseEntity.notFound().build();
         }
         repository.findById(id)
-                .ifPresent(task -> task.setDone(!task.isDone()));
+                .map(Task::toggle)
+                .ifPresent(eventPublisher::publishEvent);
         return ResponseEntity.noContent().build();
     }
 }
